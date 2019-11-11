@@ -27,8 +27,10 @@ def deserialize_data_from_disk(json_location):
         # print(locks_obj.get_all_locks())
         # print(groups_obj.get_all_groups())
         # print(media_obj.get_all_media())
-        for r in buildings_obj.get_most_relevant_results('HOFF', 50):
-            print(r)
+        # for r in buildings_obj.get_most_relevant_results('HOFF', 50):
+        #     print(r)
 
+        for r in groups_obj.get_most_relevant_results('Vorstand', 50):
+            print(r)
 
 deserialize_data_from_disk('../sv_lsm_data.json')

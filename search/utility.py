@@ -17,7 +17,7 @@ def _get_fuzzy_ratio(query_text, field_text):
     return fuzz.ratio(query_text, field_text)
 
 
-def get_match_score(query_text, field_text):
+def get_match_score(query_text:str, field_text:str):
     if _is_full_match(query_text, field_text):
         return 10
     elif _is_partial_match(query_text, field_text):
