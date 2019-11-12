@@ -5,32 +5,39 @@ from search.groups import Groups
 from search.locks import Locks
 from search.media import Media
 
+file_location = '../sv_lsm_data.json'
 
 def deserialize_data_from_disk(json_location):
     file_mode = 'r'
     with open(json_location, file_mode) as read_file:
         data = json.load(read_file)
+        return data
 
-        buildings = data['buildings']
-        buildings_obj = Buildings(buildings)
 
-        locks = data['locks']
-        locks_obj = Locks(locks)
+def get_top_k_results(num_results):
+    data = deserialize_data_from_disk(file_location)
 
-        groups = data['groups']
-        groups_obj = Groups(groups)
+    buildings = data['buildings']
+    buildings_obj = Buildings(buildings)
 
-        media = data['media']
-        media_obj = Media(media)
+    locks = data['locks']
+    locks_obj = Locks(locks)
 
-        # print(buildings_obj.get_all_buildings())
-        # print(locks_obj.get_all_locks())
-        # print(groups_obj.get_all_groups())
-        # print(media_obj.get_all_media())
-        # for r in buildings_obj.get_most_relevant_results('HOFF', 50):
-        #     print(r)
+    groups = data['groups']
+    groups_obj = Groups(groups)
 
-        for r in groups_obj.get_most_relevant_results('Vorstand', 50):
-            print(r)
+    media = data['media']
+    media_obj = Media(media)
 
-deserialize_data_from_disk('../sv_lsm_data.json')
+    relevant_entries, transitive_weight_from_buildings = buildings_obj.get_most_relevant_results('HOFF', 3)
+    for entry in relevant_entries:
+        print(entry)
+    print(transitive_weight_from_buildings)
+
+    relevant_entries = locks_obj.get_most_relevant_results('Cylinder', transitive_weight_from_buildings, 0)
+    # print(relevant_entries)
+    # for entry in relevant_entries:
+    #     print(entry)
+
+
+get_top_k_results(10)
