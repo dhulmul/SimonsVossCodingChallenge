@@ -35,9 +35,17 @@ def get_top_k_results(num_results):
     print(transitive_weight_from_buildings)
 
     relevant_entries = locks_obj.get_most_relevant_results('Cylinder', transitive_weight_from_buildings, 0)
-    # print(relevant_entries)
-    # for entry in relevant_entries:
-    #     print(entry)
+    print(relevant_entries)
+
+    relevant_entries, transitive_weight_from_groups = groups_obj.get_most_relevant_results('default', 0)
+    for entry in relevant_entries:
+        print(entry)
+    print(transitive_weight_from_groups)
+
+    relevant_entries = media_obj.get_most_relevant_results('.', transitive_weight_from_groups, 0)
+    print(relevant_entries)
+
+
 
 
 get_top_k_results(10)
