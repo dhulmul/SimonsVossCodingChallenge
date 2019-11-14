@@ -20,31 +20,24 @@ def get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj, search_st
     relevant_entries, transitive_weight_from_buildings = buildings_obj.get_most_relevant_results(search_string, 3)
 
     for entry in relevant_entries:
-        print(entry[1])
         entry.append('building')
         tok_k_results.append(entry)
-    # print(transitive_weight_from_buildings)
 
     relevant_entries = locks_obj.get_most_relevant_results(search_string, transitive_weight_from_buildings, 0)
     for entry in relevant_entries:
-        print(entry[1])
         entry.append('lock')
         tok_k_results.append(entry)
 
     relevant_entries, transitive_weight_from_groups = groups_obj.get_most_relevant_results(search_string, 0)
     for entry in relevant_entries:
-        print(entry[1])
         entry.append('group')
         tok_k_results.append(entry)
 
     relevant_entries = media_obj.get_most_relevant_results(search_string, transitive_weight_from_groups, 0)
     for entry in relevant_entries:
-        print(entry[1])
         entry.append('media')
         tok_k_results.append(entry)
 
-    for entry in tok_k_results:
-        print(entry)
     tok_k_results.sort(key=itemgetter(1), reverse=True)
 
     return tok_k_results[0:num_results]

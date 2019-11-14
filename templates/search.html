@@ -1,8 +1,0 @@
-{% block content%}
-<form method="POST" action="/search " enctype="multipart/form-data">
-    {{ form.csrf_token }}
-    {{ form.query }}
-    <p> {{ form.results }} </p>
-    <input type="submit" value="Go">
-</form>
-{% endblock %}

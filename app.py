@@ -14,7 +14,6 @@ buildings_obj, locks_obj, groups_obj, media_obj = get_objects_handler()
 def hello_world():
     search = SearchForm(request.form)
     if request.method == 'POST':
-        print(search.query.data)
         return search_results(search)
     return render_template('index.html', form=search)
 
@@ -26,10 +25,9 @@ def search_results(search):
         flash('No results found!')
         return redirect('/')
     else:
-        return render_template('results.html', results=results)
+        return render_template('index.html', form=search, results=results)
 
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 7000))
-    print("PORT ", PORT)
     app.run(host='0.0.0.0', debug=True, port=PORT)
