@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, redirect, render_template, flash
 from forms import SearchForm
-from search.import_json import get_objects_handler, get_top_k_results
+from search.build_search_data import get_objects_handler, get_top_k_results
 import os
 
 app = Flask(__name__)

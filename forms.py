@@ -3,7 +3,7 @@ from wtforms.validators import DataRequired
 
 
 class SearchForm(Form):
-  query = StringField('query', [DataRequired()])
+  query = StringField('query', [DataRequired()], render_kw={"placeholder": "Enter text to search entities..."})
   submit = SubmitField('Search',
                        render_kw={'class': 'btn btn-success btn-block'})
 
