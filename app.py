@@ -32,4 +32,4 @@ def search_results(search):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 7000))
     print("PORT ", PORT)
-    app.run(debug=True, port=PORT)
+    app.run(host='0.0.0.0', debug=True, port=PORT)
