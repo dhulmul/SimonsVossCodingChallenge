@@ -1,19 +1,31 @@
-from flask import Flask, jsonify, request
-from elasticsearch import Elasticsearch
+from flask import Flask, jsonify, request, redirect, render_template, flash
+from forms import SearchForm
+from search.import_json import get_objects_handler, get_top_k_results
 
-es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 app = Flask(__name__)
+app.secret_key = "not a secret key"
+
+buildings_obj, locks_obj, groups_obj, media_obj = get_objects_handler()
 
 
-@app.route('/')
+@app.route('/',  methods=['GET', 'POST'])
 def hello_world():
-    return 'SimonsVoss Search App!'
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        print('in POST of index')
+        print(search.query.data)
+        return search_results(search)
+    return render_template('index.html', form=search)
 
 
-@app.route('/search', methods=['GET'])
-def search():
-    results = es.get(index='')
-    return jsonify(results)
+@app.route('/results', methods=['GET', 'POST'])
+def search_results(search):
+    results = get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj, 10)
+    if not results:
+        flash('No results found!')
+        return redirect('/')
+    else:
+        return render_template('results.html', results=results)
 
 
 if __name__ == '__main__':
