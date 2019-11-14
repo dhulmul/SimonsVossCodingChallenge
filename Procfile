@@ -1,2 +1,2 @@
 heroku ps:scale web=1
-web: python -m flask run --port=$PORT 
+web: python app.py runserver 0.0.0.0:$PORT 
