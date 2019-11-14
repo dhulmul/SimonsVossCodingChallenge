@@ -2,5 +2,10 @@
 <title>Search Results - Flask Music Database</title>
 
     {% for result in results %}
-        <p> {{ result }}</p>
+        <p> Entity: {{ result[2] }}</p>
+          {% for key, value in result[0].items() %}
+                <p> {{key}}: {{ value }}</p>
+          {% endfor %}
+        <br/><br/>
+
     {% endfor %}

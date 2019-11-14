@@ -3,7 +3,7 @@ import re
 
 
 def _is_partial_match(query_text, field_text):
-    return query_text in field_text
+    return query_text.lower() in field_text.lower()
 
 
 def _is_full_match(query_text, field_text):

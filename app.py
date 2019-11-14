@@ -12,7 +12,6 @@ buildings_obj, locks_obj, groups_obj, media_obj = get_objects_handler()
 def hello_world():
     search = SearchForm(request.form)
     if request.method == 'POST':
-        print('in POST of index')
         print(search.query.data)
         return search_results(search)
     return render_template('index.html', form=search)
@@ -20,7 +19,7 @@ def hello_world():
 
 @app.route('/results', methods=['GET', 'POST'])
 def search_results(search):
-    results = get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj, 10)
+    results = get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj, search.query.data, 20)
     if not results:
         flash('No results found!')
         return redirect('/')
