@@ -1,4 +1,4 @@
-from search.utility import get_match_score
+from search.utility import get_match_score, _is_valid_attribute_value
 from enum import Enum
 
 
@@ -33,11 +33,11 @@ class Buildings:
         results = []
         transitive_attribute_contribution_ids = {}
         for building in self.buildings:
-            # print('building: ', building)
             match_score = 0
             for attribute in self.searchable_attributes_list:
+                if not _is_valid_attribute_value(building[attribute]):
+                    continue
                 attribute_score = get_match_score(query_text, building[attribute])
-                # print('attribute: ', attribute, ' score: ', attribute_score)
                 if attribute_score >= 1 and attribute in self.transitive_searchable_fields_list:
                     building_id =  building[BuildingAttributes.id.value]
                     weighted_score = self.transitive_weight_dictionary[attribute] * attribute_score

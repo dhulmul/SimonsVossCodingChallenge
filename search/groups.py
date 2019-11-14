@@ -1,4 +1,4 @@
-from search.utility import get_match_score
+from search.utility import get_match_score, _is_valid_attribute_value
 from enum import Enum
 
 
@@ -25,25 +25,14 @@ class Groups:
     def get_all_groups(self):
         return self.groups
 
-    def _is_valid_attribute_value(self, value):
-        if value is None:
-            return False
-        return True
-
-    def _is_valid_attribute_value(self, value):
-        if value is None:
-            return False
-        return True
 
     def get_most_relevant_results(self, query_text, score_threshold=0):
         results = []
         transitive_attribute_contribution_ids = {}
         for group in self.groups:
-            # print('group: ', group)
             match_score = 0
             for attribute in self.searchable_attributes_list:
-                # print(attribute, ' Type:', type(attribute), ' ',  self._is_valid_attribute_value(attribute))
-                if not self._is_valid_attribute_value(group[attribute]):
+                if not _is_valid_attribute_value(group[attribute]):
                     continue
                 attribute_score = get_match_score(query_text, group[attribute])
                 # print('attribute: ', attribute, ' score: ', attribute_score)

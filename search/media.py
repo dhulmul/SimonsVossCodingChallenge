@@ -1,5 +1,5 @@
 
-from search.utility import get_match_score
+from search.utility import get_match_score, _is_valid_attribute_value
 from enum import Enum
 
 
@@ -28,17 +28,14 @@ class Media:
         MediasAttributes.description.value: 6
     }
 
-    def _is_valid_attribute_value(self, value):
-        if value is None:
-            return False
-        return True
+
 
     def get_most_relevant_results(self, query_text, transitive_fields_contribution = {}, score_threshold=0):
         results = []
         for m in self.media:
             match_score = 0
             for attribute in self.searchable_attributes_list:
-                if not self._is_valid_attribute_value(m[attribute]):
+                if not _is_valid_attribute_value(m[attribute]):
                     continue
                 attribute_score = get_match_score(query_text, m[attribute])
                 match_score = match_score + (attribute_score * self.weight_dictionary[attribute])

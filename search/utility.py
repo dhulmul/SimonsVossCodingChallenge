@@ -26,7 +26,7 @@ def get_match_score(query_text, field_text):
         return _get_fuzzy_ratio(query_text, field_text)/100.0
 
 
-print(get_match_score('head', 'heds office'))
-# print('head' in 'head office')
-# print(fuzz.ratio('head', 'headdfdf office'))
-# print('head' in 'headdfdf office')
+def _is_valid_attribute_value(value):
+    if value is None:
+        return False
+    return True
