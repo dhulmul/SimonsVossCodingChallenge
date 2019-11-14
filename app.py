@@ -5,9 +5,8 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "not a secret key"
-
-
 buildings_obj, locks_obj, groups_obj, media_obj = get_objects_handler()
+max_results_to_display = 20
 
 
 @app.route('/',  methods=['GET', 'POST'])
@@ -20,7 +19,8 @@ def hello_world():
 
 @app.route('/results', methods=['GET', 'POST'])
 def search_results(search):
-    results = get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj, search.query.data, 20)
+    results = get_top_k_results(buildings_obj, locks_obj, groups_obj, media_obj,
+                                search.query.data, max_results_to_display)
     if not results:
         flash('No results found!')
         return redirect('/')
@@ -29,5 +29,7 @@ def search_results(search):
 
 
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 7000))
-    app.run(host='0.0.0.0', debug=True, port=PORT)
+    host = '0.0.0.0'
+    default_port = 5000
+    PORT = int(os.environ.get('PORT', default_port))
+    app.run(host=host, debug=True, port=PORT)

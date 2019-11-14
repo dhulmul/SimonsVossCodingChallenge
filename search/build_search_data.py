@@ -4,7 +4,6 @@ from search.buildings import Buildings
 from search.groups import Groups
 from search.locks import Locks
 from search.media import Media
-
 from operator import itemgetter
 
 

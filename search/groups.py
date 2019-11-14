@@ -35,7 +35,6 @@ class Groups:
                 if not _is_valid_attribute_value(group[attribute]):
                     continue
                 attribute_score = get_match_score(query_text, group[attribute])
-                # print('attribute: ', attribute, ' score: ', attribute_score)
                 if attribute_score >= 1 and attribute in self.transitive_searchable_fields_list:
                     group_id = group[GroupsAttributes.id.value]
                     weighted_score = self.transitive_weight_dictionary[attribute] * attribute_score

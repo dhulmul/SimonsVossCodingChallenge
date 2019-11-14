@@ -28,8 +28,6 @@ class Media:
         MediasAttributes.description.value: 6
     }
 
-
-
     def get_most_relevant_results(self, query_text, transitive_fields_contribution = {}, score_threshold=0):
         results = []
         for m in self.media:
